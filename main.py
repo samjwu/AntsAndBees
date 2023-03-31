@@ -1,5 +1,6 @@
 """
-Transfer learning for computer vision example classifying ants and bees
+Transfer learning for computer vision example. 
+Convolutional neural network for classifying ant and bee images.
 """
 from __future__ import division, print_function
 
@@ -30,7 +31,7 @@ def show_image(input_data, title=None):
         matplotlib.pyplot.title(title)
     matplotlib.pyplot.show()
 
-def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
+def train_model(model, criterion, optimizer, scheduler, num_epochs):
     """
     Train model on training dataset to reduce loss
     Save a deep copy of the best model weights based on accuracy during validation
@@ -164,16 +165,19 @@ if __name__ ==  '__main__':
 
     show_image(output, title=[class_names[x] for x in classes])
 
-    model_features = torchvision.models.resnet18(weights='DEFAULT')
-    num_features = model_features.fc.in_features
+    cnn_model = torchvision.models.resnet18(weights='DEFAULT')
+    for parameter in cnn_model.parameters():
+        parameter.requires_grad = False
 
-    model_features.fc = torch.nn.Linear(num_features, len(class_names))
+    num_features = cnn_model.fc.in_features
 
-    model_features = model_features.to(device)
+    cnn_model.fc = torch.nn.Linear(num_features, len(class_names))
+
+    cnn_model = cnn_model.to(device)
 
     criterion = torch.nn.CrossEntropyLoss()
 
-    optimizer_features = torch.optim.SGD(model_features.parameters(), lr=0.001, momentum=0.9)
+    optimizer_features = torch.optim.SGD(cnn_model.parameters(), lr=0.001, momentum=0.9)
 
     # decay learning rate by a factor of gamma every step_size epochs
     exponential_learning_rate_scheduler = torch.optim.lr_scheduler.StepLR(
@@ -182,11 +186,12 @@ if __name__ ==  '__main__':
         gamma=0.1
     )
 
-    model_features = train_model(
-        model_features,
+    cnn_model = train_model(
+        cnn_model,
         criterion,
         optimizer_features,
-        exponential_learning_rate_scheduler
+        exponential_learning_rate_scheduler,
+        num_epochs=10
     )
 
-    visualize_model_predictions(model_features)
+    visualize_model_predictions(cnn_model)
