@@ -1,5 +1,9 @@
 # AntsAndBees
 
+Transfer learning for computer vision example. 
+
+Convolutional neural network for classifying ant and bee images.
+
 ## Requirements
 
 To get requirements, run the following command:
