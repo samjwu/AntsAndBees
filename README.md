@@ -6,7 +6,7 @@ Convolutional neural network for classifying ant and bee images.
 
 ## Requirements
 
-To get requirements, run the following command (note this assumes your GPU is CUDA-enabled):
+To get requirements, run the following command (note this assumes your GPU is [CUDA-enabled](https://developer.nvidia.com/cuda-gpus)):
 
 `pip install -r requirements.txt`
 
