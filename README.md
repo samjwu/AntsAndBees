@@ -4,6 +4,8 @@ Transfer learning for computer vision example.
 
 Convolutional neural network for classifying ant and bee images.
 
+![Image](antsandbees.png)
+
 ## Requirements
 
 To get requirements, run the following command (note this assumes your GPU is [CUDA-enabled](https://developer.nvidia.com/cuda-gpus)):
